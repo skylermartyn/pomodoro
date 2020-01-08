@@ -1,0 +1,27 @@
+html {
+
+}
+
+body {
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-rows: 2fr 2fr 1fr;
+    grid-template-areas: 
+            ". header ."
+            ". ball ."
+            ". footer .";
+}
+
+header {
+    grid-area: header;
+}
+
+#ball-canvas {
+    grid-area: ball;
+}
+
+footer {
+    grid-area: footer;
+}
