@@ -1,13 +1,14 @@
 html {
-
+    height: 100%;
+    width: 100%;
 }
 
 body {
     height: 100%;
     width: 100%;
     display: grid;
-    grid-template-columns: 1fr 2fr 1fr;
-    grid-template-rows: 2fr 2fr 1fr;
+    grid-template-columns: 1fr 10fr 1fr;
+    grid-template-rows: 10fr 30fr 1fr;
     grid-template-areas: 
             ". header ."
             ". ball ."
@@ -20,6 +21,7 @@ header {
 
 #ball-canvas {
     grid-area: ball;
+ 
 }
 
 footer {
