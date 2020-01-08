@@ -22,9 +22,9 @@ buttons.appendChild(startButton);
 // Click listener to start/restart current timer
 startButton.addEventListener('click', () => {
     if (currentStage == 1) {
-        startTimer(.5);
-    } else if (currentStage == 2) {
         startTimer(5);
+    } else if (currentStage == 2) {
+        startTimer(1);
     }
 });
 
@@ -32,10 +32,10 @@ startButton.addEventListener('click', () => {
 startButton.addEventListener('dblclick', () => {
     if (currentStage == 2) {
         currentStage = 1;
-        startTimer(.5);
+        startTimer(5);
     } else if (currentStage == 1) {
         currentStage = 2;
-        startTimer(5);
+        startTimer(1);
     }
 })
 
@@ -67,13 +67,13 @@ Starts the timer that presents progress by rerendering a circle
 function startTimer (length) {
     // Modulate color based on timer stage
     let circleColor = '#FFFFFF';
-    if (length == 5) circleColor = '#000000';
+    if (length == 1) circleColor = '#000000';
     
     // Clear timer for restart if already running
     if (timerRunning) {
         clearInterval(timerId);
         ball.clearRect(0, 0, ballCanvas.width, ballCanvas.height);
-        length == .5 ? circleRender(1, '#000000') : circleRender(1, '#FFFFFF');
+        length == 5 ? circleRender(1, '#000000') : circleRender(1, '#FFFFFF');
     }
     timerRunning = true;
     if (timerRunning) {
@@ -89,15 +89,15 @@ function startTimer (length) {
     timerId = setInterval(function() {
         timePassed += 100;
         const progress = timePassed / totalTime;
-        if (length == 5) ball.clearRect(0, 0, ballCanvas.width, ballCanvas.height);
+        if (length == 1) ball.clearRect(0, 0, ballCanvas.width, ballCanvas.height);
         circleRender(progress, circleColor);
         
-        if (timePassed >= totalTime && length == .5) {
+        if (timePassed >= totalTime && length == 5) {
             clearInterval(timerId);
             timerRunning = false;
             ball.clearRect(0, 0, ballCanvas.width, ballCanvas.height);
             currentStage = 2;
-            startTimer(5);
+            startTimer(1);
         }
     }, 100)
 }
