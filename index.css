@@ -11,17 +11,48 @@ body {
     grid-template-rows: 10fr 30fr 1fr;
     grid-template-areas: 
             ". header ."
-            ". ball ."
+            ". main ."
             ". footer .";
 }
 
 header {
     grid-area: header;
+    display: inline;
+    text-align: left;
+    margin-top: 50px;
+    margin-left: 190px;
+    font-size: 12pt;
+}
+
+button {
+    box-shadow: none;
+    border-style: solid;
+    border-color: black;
+    margin: 10px;
+}
+
+header.span {
+    text-align: center;
+    margin-top: 50px;
+}
+
+
+
+#main-module {
+    display: grid;
+    grid-area: main;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: "buttons ball";
+}
+
+#buttons {
+    grid-area: buttons;
+    margin: auto;
 }
 
 #ball-canvas {
     grid-area: ball;
- 
+
 }
 
 footer {
