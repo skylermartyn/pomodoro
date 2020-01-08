@@ -98,7 +98,13 @@ function startTimer (length) {
             ball.clearRect(0, 0, ballCanvas.width, ballCanvas.height);
             currentStage = 2;
             startTimer(5);
-        } 
+        } else if (timePassed >= totalTime && length == 5) {
+            clearInterval(timerId);
+            ball.clearRect(0, 0, ballCanvas.width, ballCanvas.height);
+            circleRender(1, '#000000', 100);
+            startButton.innerText = 'Start';
+            buttons.removeChild(stopButton);
+        }
     }, 100)
 }
 
