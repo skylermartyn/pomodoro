@@ -129,7 +129,7 @@ function startTimer (length) {
             circleRender(1, '#000000', 100);
             startButton5.innerText = 'Start 5';
             startButton5.blur();
-            buttons.removeChild(stopButton);
+            stop.removeChild(stopButton);
         }
     }, 100)
 }
