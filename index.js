@@ -8,6 +8,8 @@ const stop = document.getElementById('stop');
 const instructions = document.getElementById('instructions');
 const footer = document.querySelector('footer');
 
+const chime25 = new Audio('sounds/chime25.mp3');
+const chime5 = new Audio('sounds/chime5.mp3');
 let cleanHistory = true;
 let timerRunning = false;
 let timerId = null;
@@ -118,12 +120,15 @@ function startTimer (length) {
             timerRunning = false;
             ball.clearRect(0, 0, ballCanvas.width, ballCanvas.height);
             currentStage = 2;
+            chime25.play();
             startTimer(5);
         } else if (timePassed >= totalTime && length == 5) {
             clearInterval(timerId);
+            chime5.play();
             ball.clearRect(0, 0, ballCanvas.width, ballCanvas.height);
             circleRender(1, '#000000', 100);
             startButton5.innerText = 'Start 5';
+            startButton5.blur();
             buttons.removeChild(stopButton);
         }
     }, 100)
