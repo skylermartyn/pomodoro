@@ -1,6 +1,12 @@
 // Global Variables
+const header = document.querySelector('header');
 const main = document.getElementById('main-module');
 const buttons = document.getElementById('buttons');
+const start25 = document.getElementById('start-25');
+const start5 = document.getElementById('start-5');
+const stop = document.getElementById('stop');
+const footer = document.querySelector('footer');
+console.log(footer);
 let timerRunning = false;
 let timerId = null;
 let currentStage = 1;
@@ -14,35 +20,36 @@ ballCanvas.style.margin = 'auto';
 const ball = ballCanvas.getContext("2d"); 
 circleRender(1, '#000000', 100);
 
-// Create start and stop buttons
-const startButton = document.createElement('button');
-startButton.innerText = 'Start';
-startButton.style.margin = 'auto';
-buttons.appendChild(startButton);
-// Click listener to start/restart current timer
-startButton.addEventListener('click', () => {
-    if (currentStage == 1) {
-        startTimer(25);
-    } else if (currentStage == 2) {
-        startTimer(5);
+// Create start button for 25 minute timer
+const startButton25 = document.createElement('button');
+startButton25.innerText = 'Start 25';
+startButton25.style.margin = 'auto';
+start25.appendChild(startButton25);
+startButton25.addEventListener('click', () => {
+    if (currentStage == 2) {
+        startButton25.innerText = 'Restart 25';
+        startButton25.innerText = 'Start 5';
     }
+    startTimer(25);
 });
 
-// Click listener to reset timer to beginning of the 25 minutes
-startButton.addEventListener('dblclick', () => {
-    if (currentStage == 2) {
-        currentStage = 1;
-        startTimer(25);
-    } else if (currentStage == 1) {
-        currentStage = 2;
-        startTimer(5);
+// Create start button for 5 minute timer
+const startButton5 = document.createElement('button');
+startButton5.innerText = 'Start 5';
+startButton5.style.margin = 'auto';
+start5.appendChild(startButton5);
+startButton5.addEventListener('click', () => {
+    if (currentStage == 1) {
+        startButton25.innerText = 'Start 25';
+        startButton25.innerText = 'Restart 5';
     }
-})
+    startTimer(5);
+});
 
 const stopButton = document.createElement('button');
 stopButton.innerText = 'Stop';
 stopButton.style.margin = 'auto';
-stopButton.addEventListener('click', () => stopTimer())
+stopButton.addEventListener('click', () => stopTimer());
 
 /*
 Renders a circle to signify time passed
@@ -77,8 +84,7 @@ function startTimer (length) {
     }
     timerRunning = true;
     if (timerRunning) {
-        startButton.innerText = 'Restart';
-        buttons.appendChild(stopButton);
+        stop.appendChild(stopButton);
     }
 
     // Initialize timer variables
@@ -102,7 +108,7 @@ function startTimer (length) {
             clearInterval(timerId);
             ball.clearRect(0, 0, ballCanvas.width, ballCanvas.height);
             circleRender(1, '#000000', 100);
-            startButton.innerText = 'Start';
+            startButton5.innerText = 'Start 5';
             buttons.removeChild(stopButton);
         }
     }, 100)
