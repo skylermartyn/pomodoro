@@ -69,7 +69,7 @@ function circleRender (progress, color) {
     // ball.clearRect(0, 0, ballCanvas.width, ballCanvas.height);      
     const radians = ((2 * Math.PI) * progress) + 1.5 * Math.PI;
     ball.beginPath();
-    ball.arc(150, 150, 100, (1.5 * Math.PI), radians);
+    ball.arc(150, 110, 100, (1.5 * Math.PI), radians);
     ball.strokeStyle = color;
     ball.stroke();
     console.log(new Date().getTime());
