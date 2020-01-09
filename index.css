@@ -27,8 +27,23 @@ header {
 button {
     box-shadow: none;
     border-style: solid;
-    border-color: black;
-    margin: 10px;
+    border-color: slategrey;
+    color: slategrey;
+    margin: auto;
+    outline: none;
+    height: 70%;
+    width: 70%;
+    transition: 100ms;
+}
+
+button:hover {
+    height: 65%;
+    width: 65%;
+}
+
+button:active {
+    height: 60%;
+    width: 60%;
 }
 
 header.span {
@@ -47,7 +62,29 @@ header.span {
 
 #buttons {
     grid-area: buttons;
-    margin: auto;
+    display: grid;
+    grid-template-rows: repeat(5, 1fr);
+    grid-template-areas:
+                    "." 
+                    "start25"
+                    "start5"
+                    "stop"
+                    ".";
+}
+
+#start-25 {
+    grid-area: start25;
+    display: grid;
+}
+
+#start-5 {
+    grid-area: start5;
+    display: grid;
+}
+
+#stop {
+    grid-area: stop;
+    display: grid;
 }
 
 #ball-canvas {
@@ -57,4 +94,5 @@ header.span {
 
 footer {
     grid-area: footer;
+    height: 2vw;
 }
