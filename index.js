@@ -35,7 +35,7 @@ startButton25.addEventListener('click', () => {
         startButton25.innerText = 'Restart 25';
         startButton5.innerText = 'Start 5';
     }
-    startTimer(25);
+    startTimer(.5);
 });
 
 // Create start button for 5 minute timer
@@ -115,7 +115,7 @@ function startTimer (length) {
         if (length == 5) ball.clearRect(0, 0, ballCanvas.width, ballCanvas.height);
         circleRender(progress, circleColor);
         
-        if (timePassed >= totalTime && length == 25) {
+        if (timePassed >= totalTime && length == .5) {
             clearInterval(timerId);
             timerRunning = false;
             ball.clearRect(0, 0, ballCanvas.width, ballCanvas.height);
@@ -136,5 +136,12 @@ function startTimer (length) {
 
 function stopTimer () {
     clearInterval(timerId);
-
+    if (!chime25.paused) {
+        chime25.pause();
+        chime25.currentTime = 0;
+    }
+    if (!chime5.paused) {
+        chime5.pause();
+        chime5.currentTime = 0;
+    }
 }
