@@ -17,13 +17,14 @@ body {
 
 header {
     grid-area: header;
-    display: inline;
+    display: inline-block;
     text-align: left;
-    margin-top: 50px;
-    margin-left: 190px;
-    font-size: 12pt;
+    margin-top: 40px;
 }
 
+#logo {
+    width: 65%;
+}
 button {
     font-family: 'Courier New', Courier, monospace;
     font-size: 1.4vw;
