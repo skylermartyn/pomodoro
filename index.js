@@ -5,11 +5,14 @@ const buttons = document.getElementById('buttons');
 const start25 = document.getElementById('start-25');
 const start5 = document.getElementById('start-5');
 const stop = document.getElementById('stop');
+const instructions = document.getElementById('instructions');
 const footer = document.querySelector('footer');
-console.log(footer);
+
+let cleanHistory = true;
 let timerRunning = false;
 let timerId = null;
 let currentStage = 1;
+
 
 
 // Create canvas for circle and initial render
@@ -26,9 +29,9 @@ startButton25.innerText = 'Start 25';
 startButton25.style.margin = 'auto';
 start25.appendChild(startButton25);
 startButton25.addEventListener('click', () => {
-    if (currentStage == 2) {
+    if (currentStage == 2 || !timerRunning) {
         startButton25.innerText = 'Restart 25';
-        startButton25.innerText = 'Start 5';
+        startButton5.innerText = 'Start 5';
     }
     startTimer(25);
 });
@@ -39,16 +42,19 @@ startButton5.innerText = 'Start 5';
 startButton5.style.margin = 'auto';
 start5.appendChild(startButton5);
 startButton5.addEventListener('click', () => {
-    if (currentStage == 1) {
+    if (currentStage == 1 || timerRunning) {
         startButton25.innerText = 'Start 25';
-        startButton25.innerText = 'Restart 5';
+        startButton5.innerText = 'Restart 5';
     }
     startTimer(5);
 });
 
+// Create stop button to be visible when timer is running
 const stopButton = document.createElement('button');
 stopButton.innerText = 'Stop';
 stopButton.style.margin = 'auto';
+stopButton.style.fontWeight = 'normal';
+stopButton.style.borderWidth = '1px';
 stopButton.addEventListener('click', () => stopTimer());
 
 /*
@@ -74,7 +80,12 @@ Starts the timer that presents progress by rerendering a circle
 function startTimer (length) {
     // Modulate color based on timer stage
     let circleColor = '#FFFFFF';
-    if (length == 5) circleColor = '#000000';
+    if (length == 5) {
+        circleColor = '#000000';
+        currentStage = 2;
+    } else if (length == 25) {
+        currentStage = 1;
+    }
     
     // Clear timer for restart if already running
     if (timerRunning) {
@@ -84,6 +95,10 @@ function startTimer (length) {
     }
     timerRunning = true;
     if (timerRunning) {
+        if (cleanHistory) {
+            cleanHistory = false;
+            stop.removeChild(instructions);
+        }
         stop.appendChild(stopButton);
     }
 
@@ -116,4 +131,5 @@ function startTimer (length) {
 
 function stopTimer () {
     clearInterval(timerId);
+
 }

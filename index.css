@@ -25,6 +25,7 @@ header {
 }
 
 button {
+    font-family: 'Courier New', Courier, monospace;
     box-shadow: none;
     border-style: solid;
     border-color: slategrey;
@@ -44,6 +45,11 @@ button:hover {
 button:active {
     height: 60%;
     width: 60%;
+}
+
+button:focus {
+    font-weight: bolder;
+    border-width: 2px;
 }
 
 header.span {
@@ -87,9 +93,25 @@ header.span {
     display: grid;
 }
 
+#stop.button {
+    font-weight: normal;
+}
+
+#instructions {
+    color: #300;
+    display: inline;
+    margin: auto;
+    height: 70%;
+    width: 70%;
+    text-align: center;
+    line-height: 20px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: .8rem;
+
+}
+
 #ball-canvas {
     grid-area: ball;
-
 }
 
 footer {
