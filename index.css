@@ -32,6 +32,7 @@ button {
     box-shadow: none;
     border-style: solid;
     border-color: slategrey;
+    background-color: white;
     color: slategrey;
     margin: auto;
     outline: none;
