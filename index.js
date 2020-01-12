@@ -42,7 +42,7 @@ startButton25.addEventListener('click', () => {
     }
     startButton25.classList.add('button-focus');
     startButton25.innerText = 'Restart 25'
-    startTimer(.5);
+    startTimer(25);
 });
 
 // Create start button for 5 minute timer
@@ -57,7 +57,7 @@ startButton5.addEventListener('click', () => {
     }
     startButton5.classList.add('button-focus');
     startButton5.innerText = 'Restart 5'
-    startTimer(.4);
+    startTimer(5);
 });
 
 // Create stop button to be visible when timer is running
@@ -88,7 +88,7 @@ instructions.addEventListener('mouseleave', () => {
     instructions.style.color = '#300';
 })
 instructions.addEventListener('click', () => {
-    html.style.opacity = '0.3';
+
 })
 
 
@@ -113,10 +113,10 @@ Starts the timer that presents progress by rerendering a circle
 function startTimer (length) {
     // Modulate color based on timer stage
     let circleColor = '#FFFFFF';
-    if (length == .4) {
+    if (length == 5) {
         circleColor = '#000000';
         currentStage = 2;
-    } else if (length == .5) {
+    } else if (length == 25) {
         currentStage = 1;
     }
 
@@ -124,7 +124,7 @@ function startTimer (length) {
     if (timerRunning) {
         clearInterval(timerId);
         ball.clearRect(0, 0, ballCanvas.width, ballCanvas.height);
-        length == .4 ? circleRender(1, '#000000') : circleRender(1, '#FFFFFF');
+        length == 5 ? circleRender(1, '#000000') : circleRender(1, '#FFFFFF');
     }
     timerRunning = true;
     if (timerRunning) {
@@ -144,11 +144,11 @@ function startTimer (length) {
         // Rerender new circle every 1/10th second
         timePassed += 100;
         const progress = timePassed / totalTime;
-        if (length == .4) ball.clearRect(0, 0, ballCanvas.width, ballCanvas.height);
+        if (length == 5) ball.clearRect(0, 0, ballCanvas.width, ballCanvas.height);
         circleRender(progress, circleColor);
 
         // If 25 minute timer has completed, move on to 5 minute timer
-        if (timePassed >= totalTime && length == .5) {
+        if (timePassed >= totalTime && length == 25) {
             clearInterval(timerId);
             timerRunning = false;
             ball.clearRect(0, 0, ballCanvas.width, ballCanvas.height);
@@ -158,9 +158,9 @@ function startTimer (length) {
             startButton25.innerText = 'Start 25';
             startButton5.classList.add('button-focus');
             startButton5.innerText = 'Restart 5';       
-            startTimer(.4);
+            startTimer(5);
         // If 5 minute timer has completed, revert to begining state
-        } else if (timePassed >= totalTime && length == .4) {
+        } else if (timePassed >= totalTime && length == 5) {
             clearInterval(timerId);
             chime5.play();
             ball.clearRect(0, 0, ballCanvas.width, ballCanvas.height);
