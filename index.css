@@ -25,6 +25,7 @@ header {
 #logo {
     width: 65%;
 }
+
 button {
     font-family: 'Courier New', Courier, monospace;
     font-size: 1.4vw;
@@ -40,16 +41,17 @@ button {
 }
 
 button:hover {
-    height: 65%;
-    width: 65%;
+    height: 66%;
+    width: 66%;
+    cursor: pointer;
 }
 
 button:active {
-    height: 60%;
-    width: 60%;
+    height: 64%;
+    width: 64%;
 }
 
-button:focus {
+.button-focus {
     font-weight: bolder;
     border-width: 2px;
 }
@@ -77,7 +79,7 @@ header.span {
                     "start25"
                     "start5"
                     "stop"
-                    ".";
+                    "underStop";
 }
 
 #start-25 {
@@ -99,17 +101,25 @@ header.span {
     font-weight: normal;
 }
 
-#instructions {
+.text-info {
     color: #300;
     display: inline;
     margin: auto;
-    height: 70%;
-    width: 70%;
     text-align: center;
     line-height: 20px;
     font-family: 'Courier New', Courier, monospace;
     font-size: 1.3vw;
+}
 
+#instructions {
+    height: 70%;
+    width: 70%;
+}
+
+#under-stop {
+    grid-area: underStop;
+    margin-top: 2px;
+    color: grey;
 }
 
 #ball-canvas {

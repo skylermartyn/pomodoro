@@ -5,6 +5,7 @@ const buttons = document.getElementById('buttons');
 const start25 = document.getElementById('start-25');
 const start5 = document.getElementById('start-5');
 const stop = document.getElementById('stop');
+const underStop = document.getElementById('under-stop');
 const instructions = document.getElementById('instructions');
 const footer = document.querySelector('footer');
 
@@ -16,6 +17,7 @@ const chime5 = new Audio('sounds/chime5.mp3');
 let cleanHistory = true;
 let timerRunning = false;
 let timerId = null;
+let moreInfoAnimation = null;
 let currentStage = 1;
 
 
@@ -65,6 +67,30 @@ stopButton.style.margin = 'auto';
 stopButton.style.fontWeight = 'normal';
 stopButton.style.borderWidth = '1px';
 stopButton.addEventListener('click', () => stopTimer());
+
+
+// Event handler for instructions
+instructions.addEventListener('mouseenter', () => {
+    instructions.style.cursor = 'pointer';
+    instructions.style.color = 'grey';
+    underStop.innerHTML = '.<br>';
+    moreInfoAnimation = setInterval( () => {
+        if (underStop.innerHTML.length < 15) {
+            underStop.innerHTML += '.<br>';    
+        } else {
+            underStop.innerHTML = '';
+        }
+    }, 500)  
+});
+instructions.addEventListener('mouseleave', () => {
+    clearInterval(moreInfoAnimation);
+    underStop.innerHTML = '';
+    instructions.style.color = '#300';
+})
+instructions.addEventListener('click', () => {
+    html.style.opacity = '0.3';
+})
+
 
 /*
 Renders a circle to signify time passed
