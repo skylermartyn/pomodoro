@@ -1,4 +1,11 @@
-// Global Variables
+//////////////////////////////////////////////////////////
+// Global Variables: 5 - 42
+// Page Configuration: 43 - 114
+// Functions and Logic: 115 - 127
+//////////////////////////////////////////////////////////
+                // Global Variables //
+
+// DOM Variables
 const header = document.querySelector('header');
 const main = document.getElementById('main-module');
 const buttons = document.getElementById('buttons');
@@ -10,17 +17,31 @@ const instructions = document.getElementById('instructions');
 const footer = document.querySelector('footer');
 
 // Sounds
+
 const chime25 = new Audio('sounds/chime25.mp3');
 const chime5 = new Audio('sounds/chime5.mp3');
 
 // State
+
+// True if the user is has not interacted with timer
+// since refresh or last 25min-5min cycle
 let cleanHistory = true;
-let timerRunning = false;
+
+// Is the timer active? Paused timer is still active
+let timerActive = false;
+
+// Interval timer identification for Pomodoro timer
 let timerId = null;
+
+// Interval timer identification for more info animation
 let moreInfoAnimation = null;
+
+// Stage 1 = 25 min timer, Stage 2 = 5 min timer
 let currentStage = 1;
 
 
+//////////////////////////////////////////////////////////
+                // Page Configuration //
 
 // Create canvas for circle and initial render
 const ballCanvas = document.getElementById("ball-canvas");
@@ -60,7 +81,7 @@ startButton5.addEventListener('click', () => {
     startTimer(5);
 });
 
-// Create stop button to be visible when timer is running
+// Create stop button to be visible when timer is active
 const stopButton = document.createElement('button');
 stopButton.innerText = 'Stop';
 stopButton.style.margin = 'auto';
@@ -69,7 +90,7 @@ stopButton.style.borderWidth = '1px';
 stopButton.addEventListener('click', () => stopTimer());
 
 
-// Event handler for instructions
+// Event handlers for instructions
 instructions.addEventListener('mouseenter', () => {
     instructions.style.cursor = 'pointer';
     instructions.style.color = 'grey';
@@ -91,6 +112,8 @@ instructions.addEventListener('click', () => {
 
 })
 
+//////////////////////////////////////////////////////////
+                // Functions and Logic //
 
 /*
 Renders a circle to signify time passed
@@ -121,13 +144,13 @@ function startTimer (length) {
     }
 
     // Clear timer for restart if already running
-    if (timerRunning) {
+    if (timerActive) {
         clearInterval(timerId);
         ball.clearRect(0, 0, ballCanvas.width, ballCanvas.height);
         length == 25 ? circleRender(1, '#000000') : circleRender(1, '#FFFFFF');
     }
-    timerRunning = true;
-    if (timerRunning) {
+    timerActive = true;
+    if (timerActive) {
         if (cleanHistory) {
             cleanHistory = false;
             stop.removeChild(instructions);
@@ -154,7 +177,7 @@ function startTimer (length) {
         // If 25 minute timer has completed, move on to 5 minute timer
         if (timePassed >= totalTime && length == 25) {
             clearInterval(timerId);
-            timerRunning = false;
+            timerActive = false;
             ball.clearRect(0, 0, ballCanvas.width, ballCanvas.height);
             currentStage = 2;
             chime25.play(); 
@@ -173,6 +196,7 @@ function startTimer (length) {
             startButton5.innerText = 'Start 5';
             stop.removeChild(stopButton);
             stop.appendChild(instructions);
+            cleanHistory = true;
         }
     }, 100)
 }
@@ -181,13 +205,17 @@ function startTimer (length) {
 Stops timer and/or chimes
 */
 function stopTimer () {
+    // Stops timer
     clearInterval(timerId);
+
+    // Removes button focus styling from timer buttons
     if (currentStage == 1) {
         startButton25.classList.remove('button-focus');
     } else if (currentStage == 2) {
         startButton5.classList.remove('button-focus');
     }
 
+    // Pauses and resets whichever chimes are playing
     if (!chime25.paused) {
         chime25.pause();
         chime25.currentTime = 0;
