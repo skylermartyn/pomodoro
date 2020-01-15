@@ -1,31 +1,39 @@
 //////////////////////////////////////////////////////////
-// Global Variables: 
-// Page Configuration: 
-// Functions and Logic: 
+// Global Variables: 5 - 61
+// Page Configuration: 62 - 173
+// Functions and Logic: 174 - 327
 //////////////////////////////////////////////////////////
                 // Global Variables //
 
-// DOM Variables
+        // DOM Variables
+
+// General areas
 const header = document.querySelector('header');
 const main = document.getElementById('main-module');
+const footer = document.querySelector('footer');
+
+// Button section
 const buttons = document.getElementById('buttons');
 const start25 = document.getElementById('start-25');
 const start5 = document.getElementById('start-5');
 const stop = document.getElementById('stop');
 const underStop = document.getElementById('under-stop');
+
+// Instructions and info
 const instructions = document.getElementById('instructions');
 const moreInfo = document.getElementById('more-info');
 const xBox = document.getElementById('x-container');
-const footer = document.querySelector('footer');
+
+// Encouragement messages
 const afterPomo = document.createElement('div');
 const afterSession = document.createElement('div');
 
-// Sounds
+        // Sounds
 
 const chime25 = new Audio('sounds/chime25.mp3');
 const chime5 = new Audio('sounds/chime5.mp3');
 
-// State
+        // State
 
 // True if the user is has not interacted with timer
 // since refresh or last 25min-5min cycle
@@ -49,7 +57,7 @@ let moreInfoAnimation = null;
 let currentStage = 1;
 
 // Keep track of timer cycles to reset at 4 cycles
-let cyclesCompleted = 4;
+let cyclesCompleted = 0;
 
 //////////////////////////////////////////////////////////
                 // Page Configuration //
@@ -68,6 +76,7 @@ startButton25.innerText = 'Start 25';
 startButton25.style.margin = 'auto';
 start25.appendChild(startButton25);
 startButton25.addEventListener('click', () => {
+    // Start timer & change button styling to reflect
     if (startButton5.innerText == 'Restart 5') {
         startButton5.classList.remove('button-focus');
         startButton5.innerText = 'Start 5';
@@ -83,6 +92,7 @@ startButton5.innerText = 'Start 5';
 startButton5.style.margin = 'auto';
 start5.appendChild(startButton5);
 startButton5.addEventListener('click', () => {
+    // Start timer & change button styling to reflect
     if (startButton25.innerText == 'Restart 25') {
         startButton25.classList.remove('button-focus');
         startButton25.innerText = 'Start 25';
@@ -100,15 +110,13 @@ stopButton.style.fontWeight = 'normal';
 stopButton.style.borderWidth = '1px';
 stopButton.addEventListener('click', () => stopTimer());
 
-// Create after timer encouragement
-//(function format for updated dynamic input)
-
+// Create after timer encouragement messages
 afterPomo.classList.add('text-info');
 afterPomo.innerHTML = `<p>Nice! ${cyclesCompleted} pomodoro${cyclesCompleted != 1 ? 's' : ''} down, ${4 - cyclesCompleted} to go!</p>`;
 afterSession.classList.add('text-info');
 afterSession.innerHTML = `<p>Wow, you're on fire! <br>Take a 30 minute break. You deserve it.</p>`;
 
-// Add event handlers to instructions
+// Add event handlers to instructions and more info section
 instructions.addEventListener('mouseenter', () => {
     instructions.style.cursor = 'pointer';
     instructions.style.color = 'grey';
@@ -169,17 +177,16 @@ moreInfo.addEventListener('click', () => {
 /*
 Updates the encouragment message by assigning string with updated placeholders
 */
-
 function updateEncouragement() {
     afterPomo.innerHTML = `<p>Nice! ${cyclesCompleted} pomodoro${cyclesCompleted != 1 ? 's' : ''} down, ${4 - cyclesCompleted} to go!</p>`;
 }
+
 /*
 Renders a circle to signify time passed
 :param progress: <float> Number between 0 and 1 where 0 is start and 1 is finish
 :param color: <string> Color of stroke to be rendered to make the circle
 */
-function circleRender (progress, color) {
-    // ball.clearRect(0, 0, ballCanvas.width, ballCanvas.height);      
+function circleRender (progress, color) {    
     const radians = ((2 * Math.PI) * progress) + 1.5 * Math.PI;
     ball.beginPath();
     ball.arc(150, 110, 100, (1.5 * Math.PI), radians);
@@ -298,6 +305,9 @@ function stopTimer () {
     }
 }
 
+/*
+Ends timer and handles sound, animation, styling changes at end of Pomodoro
+*/
 function endCycle(number) {
     clearInterval(timerId);
     timerRunning = false;
