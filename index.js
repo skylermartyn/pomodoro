@@ -1,7 +1,7 @@
 //////////////////////////////////////////////////////////
-// Global Variables: 5 - 42
-// Page Configuration: 43 - 114
-// Functions and Logic: 115 - 127
+// Global Variables: 
+// Page Configuration: 
+// Functions and Logic: 
 //////////////////////////////////////////////////////////
                 // Global Variables //
 
@@ -14,6 +14,8 @@ const start5 = document.getElementById('start-5');
 const stop = document.getElementById('stop');
 const underStop = document.getElementById('under-stop');
 const instructions = document.getElementById('instructions');
+const moreInfo = document.getElementById('more-info');
+const xBox = document.getElementById('x-container');
 const footer = document.querySelector('footer');
 
 // Sounds
@@ -26,6 +28,11 @@ const chime5 = new Audio('sounds/chime5.mp3');
 // True if the user is has not interacted with timer
 // since refresh or last 25min-5min cycle
 let cleanHistory = true;
+
+// True if more-info section was just navigated to, delaying responsive
+// styling and button capabilities of more-info until after the cursor
+// first leaves the section
+let moreInfoJump = false;
 
 // Is the timer active? Paused timer is still active
 let timerActive = false;
@@ -108,8 +115,40 @@ instructions.addEventListener('mouseleave', () => {
     underStop.innerHTML = '';
     instructions.style.color = '#300';
 })
-instructions.addEventListener('click', () => {
 
+instructions.addEventListener('click', () => {
+    underStop.innerHTML = '';
+    clearInterval(moreInfoAnimation);
+    stop.removeChild(instructions);
+    buttons.removeChild(start25);
+    buttons.removeChild(start5);
+    moreInfoJump = true;
+    buttons.classList.add('more-info-container');
+    moreInfo.classList.add('more-info-shown');
+})
+
+moreInfo.addEventListener('mouseenter', () => {
+    if (!moreInfoJump) {
+    moreInfo.style.cursor = 'pointer';
+    moreInfo.style.color = 'grey';
+    xBox.classList.add('x-box-shown');
+    }
+});
+
+moreInfo.addEventListener('mouseleave', () => {
+    if (moreInfoJump) moreInfoJump = false;
+    moreInfo.style.color = '#300';
+    xBox.classList.remove('x-box-shown');
+})
+
+moreInfo.addEventListener('click' () => {
+    if (!moreInfoJump) {
+        buttons.classList.add('more-info-container');
+        moreInfo.classList.add('more-info-shown');
+        stop.removeChild(instructions);
+        buttons.removeChild(start25);
+        buttons.removeChild(start5);
+    }
 })
 
 //////////////////////////////////////////////////////////
