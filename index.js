@@ -36,7 +36,7 @@ startButton25.innerText = 'Start 25';
 startButton25.style.margin = 'auto';
 start25.appendChild(startButton25);
 startButton25.addEventListener('click', () => {
-    if (startButton5.classList.contains('button-focus')) {
+    if (startButton5.innerText == 'Restart 5') {
         startButton5.classList.remove('button-focus');
         startButton5.innerText = 'Start 5';
     }
@@ -51,7 +51,7 @@ startButton5.innerText = 'Start 5';
 startButton5.style.margin = 'auto';
 start5.appendChild(startButton5);
 startButton5.addEventListener('click', () => {
-    if (startButton25.classList.contains('button-focus')) {
+    if (startButton25.innerText == 'Restart 25') {
         startButton25.classList.remove('button-focus');
         startButton25.innerText = 'Start 25';
     }
@@ -124,7 +124,7 @@ function startTimer (length) {
     if (timerRunning) {
         clearInterval(timerId);
         ball.clearRect(0, 0, ballCanvas.width, ballCanvas.height);
-        length == 5 ? circleRender(1, '#000000') : circleRender(1, '#FFFFFF');
+        length == 25 ? circleRender(1, '#000000') : circleRender(1, '#FFFFFF');
     }
     timerRunning = true;
     if (timerRunning) {
@@ -138,14 +138,18 @@ function startTimer (length) {
     // Initialize timer variables
     const totalTime = 60000 * length;
     let timePassed = 0;
-    
+    let lastRender = new Date().getTime();
+
     // Timer logic
     timerId = setInterval(function() {
-        // Rerender new circle every 1/10th second
-        timePassed += 100;
+        // Rerender new circle every opportunity, top speed 100 miliseconds
+        let currentRender = new Date().getTime();
+        timePassed += currentRender - lastRender;
+        lastRender = currentRender;
         const progress = timePassed / totalTime;
         if (length == 5) ball.clearRect(0, 0, ballCanvas.width, ballCanvas.height);
         circleRender(progress, circleColor);
+        let newTime = new Date().getTime();
 
         // If 25 minute timer has completed, move on to 5 minute timer
         if (timePassed >= totalTime && length == 25) {
