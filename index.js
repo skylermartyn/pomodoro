@@ -57,7 +57,10 @@ let moreInfoAnimation = null;
 let currentStage = 1;
 
 // Keep track of timer cycles to reset at 4 cycles
-let cyclesCompleted = 0;
+let cyclesCompleted = 4;
+
+// Triggered to become true when 4 pomodoros completed
+let longRest = false;
 
 //////////////////////////////////////////////////////////
                 // Page Configuration //
@@ -220,10 +223,10 @@ function startTimer (length) {
     }
 
     stopButton.innerText = 'Stop';
-    stop.replaceChild(stopButton, stop.firstElementChild);
+    if (!stop.contains(stopButton) && !longRest) stop.replaceChild(stopButton, stop.firstElementChild);
 
     // Initialize timer variables
-    const totalTime = 60000 * length;
+    const totalTime = 600 * length;
     let timePassed = 0;
     let lastRender = new Date().getTime();
 
@@ -236,7 +239,6 @@ function startTimer (length) {
         const progress = timePassed / totalTime;
         if (length != 25) ball.clearRect(0, 0, ballCanvas.width, ballCanvas.height);
         circleRender(progress, circleColor);
-        let newTime = new Date().getTime();
 
         // If 25 minute timer has completed, move on to 5 minute timer
         if (timePassed >= totalTime && length == 25) {
@@ -247,10 +249,11 @@ function startTimer (length) {
             chime25.play(); 
             startButton25.classList.remove('button-focus');
             startButton25.innerText = 'Start 25';
-            startButton5.classList.add('button-focus');
-            startButton5.innerText = 'Restart 5';
-            cyclesCompleted++;       
+                
             if (cyclesCompleted < 4) {
+                cyclesCompleted++;
+                startButton5.classList.add('button-focus');
+                startButton5.innerText = 'Restart 5'; 
                 startTimer(5);
             } else {
                 endCycle(cyclesCompleted);
@@ -311,17 +314,25 @@ Ends timer and handles sound, animation, styling changes at end of Pomodoro
 function endCycle(number) {
     clearInterval(timerId);
     timerRunning = false;
-    chime5.play();
-    ball.clearRect(0, 0, ballCanvas.width, ballCanvas.height);
-    circleRender(1, '#000000', 100);
-    startButton5.classList.remove('button-focus');
-    startButton5.innerText = 'Start 5';
-    stop.removeChild(stopButton);
-    if (number == 4) {
-        stop.appendChild(afterSession);
+    if (number == 0) {
+        longRest = false;
+        chime5.play();
+        startButton25.innerText = 'Start 25';
+        startButton25.classList.remove('button-focus');
+        startButton5.classList.remove('button-focus');
+        startButton5.innerText = 'Start 5';
+        stop.replaceChild(instructions, stop.firstElementChild);
+    } else if (number == 4) {
+        stop.replaceChild(afterSession, stopButton);
+        longRest = true;
         cyclesCompleted = 0;
     } else {
+        chime5.play();
+        ball.clearRect(0, 0, ballCanvas.width, ballCanvas.height);
+        circleRender(1, '#000000', 100);
+        startButton5.classList.remove('button-focus');
+        startButton5.innerText = 'Start 5';
         updateEncouragement();
-        stop.appendChild(afterPomo);
+        stop.replaceChild(afterPomo, stopButton);
     }
 }
