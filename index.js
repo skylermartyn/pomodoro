@@ -57,7 +57,7 @@ let moreInfoAnimation = null;
 let currentStage = 1;
 
 // Keep track of timer cycles to reset at 4 cycles
-let cyclesCompleted = 4;
+let cyclesCompleted = 0;
 
 // Triggered to become true when 4 pomodoros completed
 let longRest = false;
@@ -226,7 +226,7 @@ function startTimer (length) {
     if (!stop.contains(stopButton) && !longRest) stop.replaceChild(stopButton, stop.firstElementChild);
 
     // Initialize timer variables
-    const totalTime = 600 * length;
+    const totalTime = 60000 * length;
     let timePassed = 0;
     let lastRender = new Date().getTime();
 

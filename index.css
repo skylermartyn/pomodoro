@@ -4,7 +4,7 @@ html {
 }
 
 body {
-    height: 100%;
+    height: 100vh;
     width: 100%;
     display: grid;
     grid-template-columns: 1fr 10fr 1fr;
@@ -19,7 +19,7 @@ header {
     grid-area: header;
     display: inline-block;
     text-align: left;
-    margin-top: 50px;
+    margin-top: 17vh;
 }
 
 #logo {
@@ -157,4 +157,17 @@ header.span {
 footer {
     grid-area: footer;
     height: 2vw;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-areas: ". . sig";
+}
+#sig-container {
+    display: inline;
+    grid-area: sig;
+    text-align: right;
+    margin-bottom: 50px;
+}
+
+#sig {
+    opacity: 0.4;
 }
