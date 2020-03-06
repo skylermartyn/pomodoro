@@ -171,3 +171,8 @@ footer {
 #sig {
     opacity: 0.4;
 }
+
+#sig:hover {
+    cursor: pointer;
+    opacity: 1;
+}
