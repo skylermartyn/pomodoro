@@ -23,6 +23,7 @@ const underStop = document.getElementById('under-stop');
 const instructions = document.getElementById('instructions');
 const moreInfo = document.getElementById('more-info');
 const xBox = document.getElementById('x-container');
+const sig = document.getElementById('sig');
 
 // Encouragement messages
 const afterPomo = document.createElement('div');
@@ -172,6 +173,10 @@ moreInfo.addEventListener('click', () => {
         buttons.appendChild(start25);
         buttons.appendChild(start5);
     }
+})
+
+sig.addEventListener('click', () => {
+    window.location = 'https://skylerowenmartyn.com';
 })
 
 //////////////////////////////////////////////////////////
